@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      .completed {
+        background-color: green;
+      }
+      .incompleted {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="root">
+      <h1>All tasks</h1>
+      <ul>
+        <li v-for="task in tasks" >
+          <div>
+            <span v-text="task.description"></span>
+            <button @click="task.completed=!task.completed" v-bind:class="{completed: task.completed,incompleted: !task.completed}" type="button" name="button">x</button>
+          </div>
+        </li>
+      </ul>
+      <h1>Incompleted tasks</h1>
+      <ul>
+        <li v-for="task in incompletedTasks" v-text="task.description"></li>
+      </ul>
+      <h1>Completed tasks</h1>
+      <ul>
+        <li v-for="task in completedTasks" v-text="task.description"></li>
+      </ul>
+    </div>
+
+    <script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+    <script type="text/javascript">
+      var app = new Vue({
+        el:"#root",
+        data: {
+          tasks: [
+            {description: "task 1",completed: true},
+            {description: "task 2",completed: false},
+            {description: "task 3",completed: true},
+            {description: "task 4",completed: false},
+          ]
+
+        },
+        computed: {
+          incompletedTasks(){
+            return this.tasks.filter(task => !task.completed);
+          },
+          completedTasks(){
+            return this.tasks.filter(task => task.completed);
+          }
+
+        }
+      });
+
+
+
+    </script>
+  </body>
+</html>

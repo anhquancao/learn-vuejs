@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      .red {
+        color: red;
+      }
+      .blue {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <h1 :class="newClass">hi</h1>
+      <button type="button" :class="{ 'red' : isLoading }" @click="toggleClass">Hello</button>
+      <button type="button" :disabled="isDisabled" @click="toggleClass">Hello</button>
+      <!-- <button @click="" type="button" v-bind:title="title" name="button">Hover me</button> -->
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: "#root",
+        data: {
+          isDisabled:true,
+          isLoading:true,
+          newClass: "red",
+          title:'new title'
+        },
+        methods: {
+          toggleClass(){
+            this.isLoading=!this.isLoading;
+          }
+        }
+      });
+    </script>
+  </body>
+
+</html>

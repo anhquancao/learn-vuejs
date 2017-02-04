@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css">
+    <script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+    <style>
+        body {
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+<div id="root" class="container">
+    <tabs>
+        <tab selected="true" name="home">Home</tab>
+        <tab name="about">adsaf</tab>
+        <tab name="contact">vrfvd</tab>
+        <tab name="blog">wqewqe</tab>
+    </tabs>
+
+</div>
+<script>
+    Vue.component('tabs', {
+        template: `
+                <div>
+                    <div class="tabs">
+                      <ul>
+                        <li v-for="tab in tabs"  :class="{ 'is-active' : tab.isActive}">
+                            <a :href="tab.href" @click="selectTab(tab)">{{tab.name}}</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="tabs-details">
+                        <slot></slot>
+                    </div>
+                </div>
+            `,
+        data() {
+            return {
+                tabs: []
+            }
+        },
+        created() {
+            this.tabs = this.$children;
+        },
+        methods: {
+            selectTab(selectedTab){
+                this.tabs.forEach(tab => {
+                    tab.isActive = (tab.name == selectedTab.name);
+                });
+            }
+        }
+    });
+
+    Vue.component('tab', {
+        template: `
+                <div v-show="isActive"><slot></slot></div>
+            `,
+        props: {
+            name: {required: true},
+            selected: {default: false}
+        },
+        data(){
+            return {
+                isActive: false
+            };
+        },
+        computed: {
+            href(){
+                return "#"+this.name.toLowerCase().replace(/ /,"-");
+            }
+        },
+        mounted() {
+            this.isActive=this.selected
+        }
+    });
+
+    new Vue({
+        el: "#root",
+        data: {
+            showModal: false
+        }
+    });
+</script>
+</body>
+</html>
